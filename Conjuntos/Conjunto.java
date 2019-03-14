@@ -27,19 +27,41 @@ class Conjunto {
         return belongsTo;
     }
 
-    boolean checkSubSet (int set[]){
-        if (set.length > this.elements.length){
+    boolean checkSubSet (Conjunto set){
+        int counterSet = this.position;
+        int counterOtherSet = set.getPosition();
+        int counter = -1    ;
+        int setElements[] = set.getSet(); 
+        if (setElements.length > this.elements.length){
             return false;
         } else {
-            for (int i : set) {
-                for (int j : this.elements) {
-                    if (i != j) {
-                        return false;
+            while (counterOtherSet >= 0){
+                while (counterSet >= 0){
+                    if (setElements[counterOtherSet] == this.elements[counterSet]) {
+                        counter++;
                     }
+                    counterSet--;
                 }
+                counterOtherSet--;
+                counterSet = set.getPosition();
             }
         }
-        return true;
+        if (counter == set.getPosition()){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    void setUnion (Conjunto set) {
+    }
+
+    int getPosition (){
+        return this.position;
+    }
+
+    int[] getSet (){
+        return this.elements;
     }
 
     void teste (){
