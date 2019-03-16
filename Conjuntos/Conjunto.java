@@ -8,16 +8,18 @@ class Conjunto {
     }
 
     void insertElement (int element) {
+        int set[] = getSet();
         if (!checkElement(element)){
-            this.elements[position++] = element;
+            set[position++] = element;
         }
     }
 
     boolean checkElement (int element) {
-        int counter = this.position;
+        int counter = this.getPosition();
+        int set[] = this.getSet();
         boolean belongsTo = false;
         while (!belongsTo && counter >= 0) {
-            if (element == this.elements[counter]){
+            if (element == set[counter]){
                 belongsTo = true;
                 return belongsTo;
             } else {
@@ -28,16 +30,17 @@ class Conjunto {
     }
 
     boolean checkSubSet (Conjunto set){
-        int counterSet = this.position;
+        int counterSet = this.getPosition();
         int counterOtherSet = set.getPosition();
-        int counter = -1    ;
-        int setElements[] = set.getSet(); 
-        if (setElements.length > this.elements.length){
+        int counter = -1;
+        int set1[] = this.getSet();
+        int set2[] = set.getSet();
+        if (set2.length > this.getSet().length){
             return false;
         } else {
             while (counterOtherSet >= 0){
                 while (counterSet >= 0){
-                    if (setElements[counterOtherSet] == this.elements[counterSet]) {
+                    if (set2[counterOtherSet] == set1[counterSet]) {
                         counter++;
                     }
                     counterSet--;
@@ -53,7 +56,30 @@ class Conjunto {
         }
     }
 
-    void setUnion (Conjunto set) {
+    void setUnion(Conjunto set) {
+        Conjunto aux_set;
+        aux_set = new Conjunto(this.getPosition() + set.getPosition());
+        int set1[] = this.getSet();
+        int set2[] = set.getSet();
+        int counter = 0;
+
+        while (counter < this.getPosition()) {
+            aux_set.insertElement(set1[counter]);
+            counter++;
+        }
+        
+        counter = 0;
+        
+        while (counter < set.getPosition()) {
+            aux_set.insertElement(set2[counter]);
+            counter++;
+        }
+
+        this.elements = aux_set.getSet();
+    }
+
+    void setIntersection(){
+
     }
 
     int getPosition (){
@@ -65,7 +91,6 @@ class Conjunto {
     }
 
     void teste (){
-        System.out.println(this.position);
         for (int i : this.elements){
             System.out.println(i);
         }

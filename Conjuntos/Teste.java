@@ -1,22 +1,19 @@
 class Teste {
     public static void main(String[] args) {
         Conjunto c1, c2;
-        c1 = new Conjunto(10);
-        c2 = new Conjunto(10);
-        c1.insertElement(239);
-        c1.insertElement(39);
-        c1.insertElement(12);
-        c1.insertElement(2349);
-        c1.insertElement(29);
-        c2.insertElement(39);
-        c2.insertElement(12);
-        c2.insertElement(2349);
-        c2.insertElement(29);
-        if (c1.checkSubSet(c2)){
-            System.out.println("c2 é subconjunto de c1");
-        }
-        if (!c2.checkSubSet(c1)){
-            System.out.println("c1 não é subconjunto de c2");
-        }
+        c1 = new Conjunto(5);
+        c2 = new Conjunto(5);
+        c1.insertElement(1);
+        c1.insertElement(2);
+        c1.insertElement(3);
+        c1.insertElement(4);
+        c1.insertElement(5);
+        c2.insertElement(6);
+        c2.insertElement(7);
+        c2.insertElement(8);
+        c2.insertElement(9);
+        c2.insertElement(10);
+        c1.setUnion(c2);
+        c1.teste();
     }
 }
