@@ -1,99 +1,118 @@
-class Conjunto {
+class Conjunto{
+    Object[] elements = {null};
     int position;
-    int elements[];
-    
-    Conjunto (int size) {
-        this.elements = new int[size];
+
+    Conjunto(Object[] elements){
+        this.elements = elements;
+        this.position = elements.length;
+    }
+
+    Conjunto(){
         this.position = 0;
     }
 
-    void insertElement (int element) {
-        int set[] = getSet();
-        if (!checkElement(element)){
-            set[position++] = element;
-        }
-    }
-
-    boolean checkElement (int element) {
-        int counter = this.getPosition();
-        int set[] = this.getSet();
-        boolean belongsTo = false;
-        while (!belongsTo && counter >= 0) {
-            if (element == set[counter]){
-                belongsTo = true;
-                return belongsTo;
-            } else {
-                counter--;
-            }
-        }
-        return belongsTo;
-    }
-
-    boolean checkSubSet (Conjunto set){
-        int counterSet = this.getPosition();
-        int counterOtherSet = set.getPosition();
-        int counter = -1;
-        int set1[] = this.getSet();
-        int set2[] = set.getSet();
-        if (set2.length > this.getSet().length){
-            return false;
-        } else {
-            while (counterOtherSet >= 0){
-                while (counterSet >= 0){
-                    if (set2[counterOtherSet] == set1[counterSet]) {
-                        counter++;
-                    }
-                    counterSet--;
-                }
-                counterOtherSet--;
-                counterSet = set.getPosition();
-            }
-        }
-        if (counter == set.getPosition()){
-            return true;
-        } else{
-            return false;
-        }
-    }
-
-    void setUnion(Conjunto set) {
-        Conjunto aux_set;
-        aux_set = new Conjunto(this.getPosition() + set.getPosition());
-        int set1[] = this.getSet();
-        int set2[] = set.getSet();
-        int counter = 0;
-
-        while (counter < this.getPosition()) {
-            aux_set.insertElement(set1[counter]);
-            counter++;
-        }
-        
-        counter = 0;
-        
-        while (counter < set.getPosition()) {
-            aux_set.insertElement(set2[counter]);
-            counter++;
-        }
-
-        this.elements = aux_set.getSet();
-    }
-
-    void setIntersection(){
-
-    }
-
-    int getPosition (){
+    int getTamanho(){
+        // Retorna a cardinalidade do conjunto
         return this.position;
     }
 
-    int[] getSet (){
+    Object[] getElements(){
+        // Retorna o array de elementsentos do conjunto
         return this.elements;
     }
 
-    void teste (){
-        for (int i : this.elements){
-            System.out.println(i);
+    Object getElement(int index){
+        // Retorna o elementsento de indice index do conjunto
+        // Caso nao o encontre, retorna null
+
+        if(index >= this.position) return null;
+        return this.elements[index];
+    }
+
+    void tableDouble(){
+        // Dobra o tamanho do array de elementsentos
+        Object[] doubleArray = new Object[this.elements.length*2];
+        for(int cont = 0; cont < this.elements.length; cont ++){
+            doubleArray[cont] = this.elements[cont];
         }
+        this.elements = doubleArray;
+    }
+
+    void tableHalve(){
+        // Corta pela metade o array de elementsentos
+        Object[] halveArray = new Object[this.elements.length/2];
+        for(int cont = 0; cont < halveArray.length; cont ++){
+            halveArray[cont] = this.elements[cont];
+        }
+        this.elements = halveArray;
+    }
+
+    void addElement(Object new_elements){
+        // Adiciona um elementsento novo no conjunto caso este já não esteja no mesmo
+        // Caso seja necessário, é feito o tableDoubling antes da adição 
+
+        if (this.buscaElements(new_elements) == -1){
+            if(this.position >= this.elements.length) this.tableDouble();
+            
+            this.elements[this.position] = new_elements;
+            this.position += 1;
+        }
+        
+    }
+
+    int buscaElements(Object set){
+        // Realiza a busca por um elementsento no conjunto
+        // Caso ele esteja no conjunto, é retornado o índice do elementsento
+        // Caso o elementsento não esteja no conjunto, retorna-se -1
+
+        for(int cont = 0; cont < this.elements.length; cont ++){
+            if(set.equals(this.elements[cont])) return cont;
+        }
+        return -1;
+    }
+
+    boolean subconjunto(Conjunto otherSet){
+        for(int cont = 0; cont < this.position; cont++){
+            if(otherSet.buscaElements(this.elements[cont]) == -1) return false;
+        }
+        return true;
+    }
+
+    Conjunto uniao(Conjunto otherSet){
+        Conjunto set = new Conjunto(this.getElements());
+
+        for(int cont = 0; cont < otherSet.getTamanho(); cont ++){
+            set.addElement(otherSet.getElement(cont));
+        }
+
+        return set;
+    }
+
+    Conjunto intersecao(Conjunto otherSet){
+        Conjunto set = new Conjunto();
+
+        for(int cont = 0; cont < this.position; cont ++){
+            Object auxSet = this.getElement(cont);
+            if(otherSet.buscaElements(auxSet) != -1){
+                set.addElement(auxSet);
+            }
+        }
+
+        return set;
+    }
+
+    Conjunto produtoCartesiano(Conjunto otherSet){
+        Conjunto set = new Conjunto();
+        ParOrdenado parOrdenado;
+
+        for(int cont = 0; cont < this.position; cont ++){
+            for(int cont2 = 0; cont2 < otherSet.getTamanho(); cont2++){
+                parOrdenado = new ParOrdenado(this.elements[cont], otherSet.getElement(cont2));
+                set.addElement(parOrdenado);
+            }
+        }
+        
+        return set;
     }
 
 }
