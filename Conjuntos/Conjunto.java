@@ -1,3 +1,5 @@
+import java.lang.Math;
+
 class Conjunto{
     Object[] elements = {null};
     int position;
@@ -12,25 +14,25 @@ class Conjunto{
     }
 
     int getTamanho(){
-        // Retorna a cardinalidade do conjunto
+        // Retorna a cardinalidade do conjunto.
         return this.position;
     }
 
     Object[] getElements(){
-        // Retorna o array de elementsentos do conjunto
+        // Retorna o array de elementos do conjunto.
         return this.elements;
     }
 
     Object getElement(int index){
-        // Retorna o elementsento de indice index do conjunto
-        // Caso nao o encontre, retorna null
+        // Retorna o elemento de indice index do conjunto
+        // Caso não o encontre, retorna null.
 
         if(index >= this.position) return null;
         return this.elements[index];
     }
 
     void tableDouble(){
-        // Dobra o tamanho do array de elementsentos
+        // Dobra o tamanho do array de elementos.
         Object[] doubleArray = new Object[this.elements.length*2];
         for(int cont = 0; cont < this.elements.length; cont ++){
             doubleArray[cont] = this.elements[cont];
@@ -39,7 +41,7 @@ class Conjunto{
     }
 
     void tableHalve(){
-        // Corta pela metade o array de elementsentos
+        // Corta pela metade o array de elementos.
         Object[] halveArray = new Object[this.elements.length/2];
         for(int cont = 0; cont < halveArray.length; cont ++){
             halveArray[cont] = this.elements[cont];
@@ -48,8 +50,8 @@ class Conjunto{
     }
 
     void addElement(Object new_elements){
-        // Adiciona um elementsento novo no conjunto caso este já não esteja no mesmo
-        // Caso seja necessário, é feito o tableDoubling antes da adição 
+        // Adiciona um elemento novo no conjunto caso este não esteja repetido da array.
+        // Caso seja necessário, é feito o tableDouble antes da adição. 
 
         if (this.buscaElements(new_elements) == -1){
             if(this.position >= this.elements.length) this.tableDouble();
@@ -61,9 +63,9 @@ class Conjunto{
     }
 
     int buscaElements(Object set){
-        // Realiza a busca por um elementsento no conjunto
-        // Caso ele esteja no conjunto, é retornado o índice do elementsento
-        // Caso o elementsento não esteja no conjunto, retorna-se -1
+        // Realiza a busca por um elemento no conjunto.
+        // Caso ele esteja no conjunto, é retornado o índice do elemento.
+        // Caso o elemento não esteja no conjunto, retorna-se -1.
 
         for(int cont = 0; cont < this.elements.length; cont ++){
             if(set.equals(this.elements[cont])) return cont;
@@ -72,6 +74,7 @@ class Conjunto{
     }
 
     boolean subconjunto(Conjunto otherSet){
+        //Verifica se o conjunto otherSet é subconjunto deste.
         for(int cont = 0; cont < this.position; cont++){
             if(otherSet.buscaElements(this.elements[cont]) == -1) return false;
         }
@@ -79,6 +82,7 @@ class Conjunto{
     }
 
     Conjunto uniao(Conjunto otherSet){
+        //Realiza a união entre conjuntos.
         Conjunto set = new Conjunto(this.getElements());
 
         for(int cont = 0; cont < otherSet.getTamanho(); cont ++){
@@ -89,6 +93,7 @@ class Conjunto{
     }
 
     Conjunto intersecao(Conjunto otherSet){
+        //Realiza a interseção entre conjuntos.
         Conjunto set = new Conjunto();
 
         for(int cont = 0; cont < this.position; cont ++){
@@ -102,6 +107,7 @@ class Conjunto{
     }
 
     Conjunto produtoCartesiano(Conjunto otherSet){
+        //Retorna um conjunto com o resultado do produto Cartesiano
         Conjunto set = new Conjunto();
         ParOrdenado parOrdenado;
 
@@ -115,4 +121,30 @@ class Conjunto{
         return set;
     }
 
+    Conjunto potencia(){
+        //Gera um conjunto com todos os subconjuntos do conjunto.
+        Conjunto set = new Conjunto();
+        Conjunto subset;
+        Conjunto auxset;
+        Object element;
+
+        for (int i = 0; i < Math.pow(2, this.getTamanho()); i++){
+            subset = new Conjunto();
+            set.addElement(subset);
+        }
+
+        for (int i = 0; i < this.getTamanho(); i++ ){
+            element = this.getElement(i);
+            for (int index = 0; index < Math.pow(2, this.getTamanho()); index++){
+                int divisao = (int)Math.pow(2, i);
+                int valor = index/divisao;
+                if (valor%2 == 0){
+                    auxset = (Conjunto)set.getElement(index);  
+                    auxset.addElement(element);
+                }
+            }
+        }
+        
+        return set;
+    }
 }
