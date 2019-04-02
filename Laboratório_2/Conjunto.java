@@ -106,6 +106,21 @@ class Conjunto{
         return set;
     }
 
+    Conjunto diferenca (Conjunto otherSet){
+        Conjunto set = new Conjunto();
+        Conjunto inter;
+
+        inter = this.intersecao(otherSet);
+        for (int cont = 0; cont < this.position; cont ++){
+            Object auxSet = this.getElement(cont);
+            if (otherSet.buscaElements(auxSet) == -1 && inter.buscaElements(auxSet) == -1){
+                set.addElement(auxSet);
+            }
+        }
+
+        return set;
+    }
+
     Conjunto produtoCartesiano(Conjunto otherSet){
         //Retorna um conjunto com o resultado do produto Cartesiano
         Conjunto set = new Conjunto();
