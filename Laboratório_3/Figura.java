@@ -1,20 +1,38 @@
 abstract class Figura {
     String tipo;
-    float[] centro = new float[2];
+    float dx, dy;
+    boolean colorido;
 
-    Figura(String tipo, float[] centro){
+    Figura(String tipo){
         this.tipo = tipo;
-        this.centro = centro;
+        this.dx = 0;
+        this.dy = 0;
+        this.colorido = false;
     }
 
-    public String desenhar() {
-        return "Sou um "+ this.tipo;
+    void desenhar() {
+        System.out.println(this);
     }
 
-    public void mover(float dx, float dy){
-        float valor_x = this.centro[0];
-        float valor_y = this.centro[1];
-        this.centro[0] = valor_x + dx;
-        this.centro[1] = valor_y + dy;
+    public String toString() {
+        return this.tipo;
+    }
+    void mover(float dx, float dy){
+        this.dx += dx;
+        this.dy += dy;
+    }
+
+    abstract double calcularArea();
+
+    float getEixoX(){
+        return this.dx;
+    }
+
+    float getEixoY(){
+        return this.dy;
+    }
+
+    float ehColorido(){
+        return this.colorido;
     }
 }
