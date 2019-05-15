@@ -5,6 +5,7 @@ class OperandCos extends OperandDecorator {
     }
 
     double operation(){
-		return Math.cos(this.getValue());
+        this.setValue(Math.cos(this.getValue()));
+		return this.getValue();
 	}
 }

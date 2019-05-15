@@ -5,6 +5,7 @@ class OperandSin extends OperandDecorator {
     }
 
     double operation(){
-		return Math.sin(this.getValue());
+        this.setValue(Math.sin(this.getValue()));
+		return this.getValue();
 	}
 }

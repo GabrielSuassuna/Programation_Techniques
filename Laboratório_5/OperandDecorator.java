@@ -10,4 +10,8 @@ abstract class OperandDecorator extends Expression{
     double getValue() {
         return this.value;
     }
+
+    void setValue(double value){
+        this.value = value;
+    }
 }

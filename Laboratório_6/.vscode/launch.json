@@ -1,0 +1,16 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Teste_Hash2",
+            "request": "launch",
+            "mainClass": "Teste_Hash2"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Teste_Hash",
+            "request": "launch",
+            "mainClass": "Teste_Hash"
+        }
+    ]
+}
