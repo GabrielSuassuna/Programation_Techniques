@@ -1,2 +1,2 @@
-# Tecnicas_de_Programa-o
+# Programmation technics
 Trabalhos de laboratório em java
